@@ -115,7 +115,7 @@ To use it from another repository, add a step after checkout and agent setup:
   with:
     node-version: 24
 - run: npm install --global @openai/codex@0.162.1 @anthropic-ai/claude-code@2.1.296
-- uses: setmp-23/agent-bench@v0.1.0
+- uses: setmp-23/agent-bench@main
   with:
     config: benchmark.config.json
     output: benchmark-results/run.json
