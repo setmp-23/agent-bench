@@ -17,8 +17,8 @@ jobs:
           node-version: 24
       - name: Check API keys
         env:
-          OPENAI_API_KEY: \${{ secrets.OPENAI_API_KEY }}
-          ANTHROPIC_API_KEY: \${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           if [[ -z "$OPENAI_API_KEY" || -z "$ANTHROPIC_API_KEY" ]]; then
             echo "Set OPENAI_API_KEY and ANTHROPIC_API_KEY in repository Actions secrets." >&2
@@ -31,8 +31,8 @@ jobs:
         with:
           config: examples/benchmark.config.json
           output: benchmark-results/run.json
-          openai-api-key: \${{ secrets.OPENAI_API_KEY }}
-          anthropic-api-key: \${{ secrets.ANTHROPIC_API_KEY }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v5
