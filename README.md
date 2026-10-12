@@ -1,5 +1,7 @@
 # agent-bench
 
+[![CI](https://github.com/setmp-23/agent-bench/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/setmp-23/agent-bench/actions/workflows/ci.yml) [![GitHub stars](https://img.shields.io/github/stars/setmp-23/agent-bench?style=social)](https://github.com/setmp-23/agent-bench/stargazers) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 `agent-bench` runs command-line coding agents against the same repository tasks, then checks their changes with commands from a JSON config. Each attempt gets a fresh workspace. A run produces JSON details and a Markdown score table.
 
 This is an early version. It measures whether configured checks pass; it does not provide a general measure of code quality. Results are comparable only when the task set, model versions, prompts, limits, and environment are held constant.
@@ -113,7 +115,7 @@ To use it from another repository, add a step after checkout and agent setup:
   with:
     node-version: 24
 - run: npm install --global @openai/codex@0.162.1 @anthropic-ai/claude-code@2.1.296
-- uses: your-account/agent-bench@v0.1.0
+- uses: setmp-23/agent-bench@v0.1.0
   with:
     config: benchmark.config.json
     output: benchmark-results/run.json
@@ -129,7 +131,7 @@ To use it from another repository, add a step after checkout and agent setup:
     if-no-files-found: ignore
 ```
 
-Replace `your-account` with the account that hosts the action. Pin a release tag or commit when you adopt it. The optional `fail-under` input makes the action fail when no agent reaches the given score; the report is still written first.
+Pin a release tag or commit when you adopt it. The optional `fail-under` input makes the action fail when no agent reaches the given score; the report is still written first.
 
 The example workflow pins the CLI package versions used for its sample run. Update those versions deliberately when you want to compare newer releases.
 
