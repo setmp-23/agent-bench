@@ -1,0 +1,51 @@
+name: agent-bench
+description: Run coding-agent CLIs against configured tasks and acceptance checks.
+inputs:
+  config:
+    description: Path to the benchmark JSON config, relative to the caller's workspace.
+    required: false
+    default: benchmark.config.json
+  output:
+    description: Path for the JSON report, relative to the caller's workspace.
+    required: false
+    default: benchmark-results/run.json
+  fail-under:
+    description: Optional minimum score from 0 to 100; the action fails if no agent reaches it.
+    required: false
+  openai-api-key:
+    description: Optional OpenAI API key, passed only to the configured agent environment.
+    required: false
+  anthropic-api-key:
+    description: Optional Anthropic API key, passed only to the configured agent environment.
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Build agent-bench
+      shell: bash
+      env:
+        AGENT_BENCH_ACTION_PATH: ${{ github.action_path }}
+      run: |
+        cd "$AGENT_BENCH_ACTION_PATH"
+        npm ci
+        npm run build
+    - name: Run benchmark
+      shell: bash
+      env:
+        AGENT_BENCH_ACTION_PATH: ${{ github.action_path }}
+        AGENT_BENCH_CONFIG: ${{ inputs.config }}
+        AGENT_BENCH_OUTPUT: ${{ inputs.output }}
+        AGENT_BENCH_FAIL_UNDER: ${{ inputs['fail-under'] }}
+        OPENAI_API_KEY: ${{ inputs['openai-api-key'] }}
+        ANTHROPIC_API_KEY: ${{ inputs['anthropic-api-key'] }}
+      run: |
+        if [[ -n "$AGENT_BENCH_FAIL_UNDER" ]]; then
+          node "$AGENT_BENCH_ACTION_PATH/dist/cli.js" run \
+            --config "$AGENT_BENCH_CONFIG" \
+            --output "$AGENT_BENCH_OUTPUT" \
+            --fail-under "$AGENT_BENCH_FAIL_UNDER"
+        else
+          node "$AGENT_BENCH_ACTION_PATH/dist/cli.js" run \
+            --config "$AGENT_BENCH_CONFIG" \
+            --output "$AGENT_BENCH_OUTPUT"
+        fi

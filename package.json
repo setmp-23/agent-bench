@@ -1,0 +1,20 @@
+{
+  "name": "agent-bench",
+  "version": "0.1.0",
+  "description": "Benchmark coding-agent CLIs against acceptance-checked tasks.",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "agent-bench": "dist/cli.js" },
+  "files": ["dist", "README.md", "LICENSE", "action.yml", "examples", ".github"],
+  "keywords": ["ai", "coding-agents", "benchmark", "evaluation", "cli"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/cli.js",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": { "node": ">=20" }
+}
